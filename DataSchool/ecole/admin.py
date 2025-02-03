@@ -45,19 +45,20 @@ class EmploisAdmin(admin.ModelAdmin):
     list_display = ("jour", "heuredebut", "heurefin", "classe", "salle", "cours", "prof")
 
 @admin.register(Seances)
-class CoursAdmin(admin.ModelAdmin):
-    list_display = ("heuredebut", "heurefin", "cours", "classe", "salle", "prof", "nombre")
+class SeancesAdmin(admin.ModelAdmin):
+    list_display = ("heuredebut", "heurefin", "cours", "classe", "salle", "prof", "nombreEleve")
 
-@admin.register(Evaluation)
-class CoursAdmin(admin.ModelAdmin):
+@admin.register(Evaluations)
+class EvaluationAdmin(admin.ModelAdmin):
     list_display = ("classe", "cours", "nbreEleve", "date")
 
 
 @admin.register(Notes)
-class CoursAdmin(admin.ModelAdmin):
+class NotesAdmin(admin.ModelAdmin):
     list_display = ("eleve", "prof", "cours", "evaluation", "note1", "note2", "note3", "moy")
 
 @admin.register(Mensualites)
 class MensualitesAdmin(admin.ModelAdmin):
-    list_display = ("classe", "montant", "mois", "date")
+    list_display = ("eleve", "montant", "mois", "date")
 
+ 

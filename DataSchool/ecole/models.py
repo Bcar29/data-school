@@ -5,7 +5,7 @@ from DataSchool.settings import AUTH_USER_MODEL
 
 class Batiments(models.Model):
     libelle = models.CharField(max_length=32)
-    nbre_bloc = models.IntegerField()
+    nbre_bloc = models.IntegerField(verbose_name="Nombre bloc")
 
     class Meta:
         verbose_name_plural = "Batiments"
@@ -15,7 +15,7 @@ class Batiments(models.Model):
 
 class Blocs(models.Model):
     libelle = models.CharField(max_length=32)
-    nbre_salle = models.IntegerField()
+    nbre_salle = models.IntegerField(verbose_name="Nombre Salle")
     batiment = models.ForeignKey(Batiments, on_delete=models.CASCADE)
 
     class Meta:
@@ -27,7 +27,7 @@ class Blocs(models.Model):
 class Salles(models.Model):
     libelle =models.CharField(max_length=32)
     bloc=models.ForeignKey(Blocs,on_delete=models.CASCADE)
-    nbr_place=models.IntegerField()
+    nbr_place=models.IntegerField(verbose_name="Nombre place")
     disponibilite=models.BooleanField()
     
     class Meta:
@@ -57,7 +57,7 @@ class Niveaux(models.Model):
 
 class Classes(models.Model):
     libelle=models.CharField(max_length=10)
-    nbre_place=models.IntegerField()
+    nbre_place=models.IntegerField(verbose_name="Nombre Place")
     niveaux=models.ForeignKey(Niveaux,on_delete=models.CASCADE)
 
     class Meta:
@@ -71,7 +71,7 @@ class Tuteurs(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     nom=models.CharField(max_length=32)
     prenom=models.CharField(max_length=32)
-    tel=models.BigIntegerField()
+    tel=models.BigIntegerField(verbose_name="Téléphone")
     email=models.EmailField()
     adress=models.CharField(max_length=32)
 
@@ -93,10 +93,9 @@ class Matieres(models.Model):
         return self.libelle
 
 GENRE=[
-    ("M","Masculin"),
-    ("F","Feminin"),
-
-]
+        ("M","Masculin"),
+        ("F","Feminin"),
+    ]
 
 class Eleves(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -105,8 +104,8 @@ class Eleves(models.Model):
     prenom=models.CharField(max_length=32)
     photo=models.ImageField(upload_to="image") 
     sexe=models.CharField(choices=GENRE,max_length=10)
-    datenaissance=models.DateField()
-    lieunaissance=models.CharField(max_length=50)
+    datenaissance=models.DateField(verbose_name="Date de naissance")
+    lieunaissance=models.CharField(max_length=50, verbose_name="Lieu de naissance")
     pere=models.CharField(max_length=50)
     mere=models.CharField(max_length=50)
     classe=models.ForeignKey(Classes,on_delete=models.SET_NULL,null=True)
@@ -134,9 +133,9 @@ class Profs(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
-    tel = models.BigIntegerField()
+    tel = models.BigIntegerField(verbose_name="Téléphone")
     email = models.EmailField()
-    adresse = models.CharField(max_length=50)
+    addresse = models.CharField(max_length=50)
 
     class Meta:
        verbose_name_plural = "Profs"
@@ -165,8 +164,8 @@ class Emplois(models.Model):
     salle = models.ForeignKey(Salles , on_delete=models.CASCADE)
     cours = models.ForeignKey(Cours , on_delete=models.CASCADE)
     prof = models.ForeignKey(Profs , on_delete=models.CASCADE)
-    heuredebut = models.TimeField()
-    heurefin = models.TimeField()
+    heuredebut = models.TimeField(verbose_name="Debut du cours")
+    heurefin = models.TimeField(verbose_name="Fin du cours")
 
     class Meta:
        verbose_name_plural = "Emplois"
@@ -175,13 +174,13 @@ class Emplois(models.Model):
         return self.classe
  
 class Seances(models.Model):
-    heuredebut=models.TimeField()
-    heurefin=models.TimeField()
+    heuredebut=models.TimeField(verbose_name="Debut du cours")
+    heurefin=models.TimeField(verbose_name="Fin du cours")
     cours=models.ForeignKey(Cours, on_delete=models.CASCADE)
     classe=models.ForeignKey(Classes, on_delete=models.CASCADE)
     salle=models.ForeignKey(Salles, on_delete=models.CASCADE)
     prof=models.ForeignKey(Profs, on_delete=models.CASCADE)
-    nombreEleve=models.IntegerField()
+    nombreEleve=models.IntegerField(verbose_name="Nombre eleve")
     eleve = models.ManyToManyField(Eleves,through='EleveSeances')
 
     class Meta:
@@ -198,11 +197,11 @@ class EleveSeances(models.Model):
 
 
 
-class Evaluation(models.Model):
+class Evaluations(models.Model):
     classe = models.ForeignKey(Classes,on_delete=models.CASCADE)
     cours = models.ForeignKey(Cours,on_delete=models.CASCADE)
-    nbreEleve = models.IntegerField()
-    date = models.DateField()
+    nbreEleve = models.IntegerField(verbose_name="Nombre Eleve")
+    date = models.DateField(verbose_name="Date")
     eleve = models.ManyToManyField(Eleves)
 
     class Meta:
@@ -215,7 +214,7 @@ class Notes(models.Model):
     eleve = models.ForeignKey(Eleves,on_delete=models.CASCADE)
     prof = models.ForeignKey(Profs,on_delete=models.SET_NULL,null=True)
     cours = models.ForeignKey(Cours,on_delete=models.CASCADE)
-    evaluation = models.ForeignKey(Evaluation,on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluations,on_delete=models.CASCADE)
     note1 = models.FloatField()
     note2 = models.FloatField()
     note3 = models.FloatField()
@@ -237,7 +236,7 @@ class Notes(models.Model):
 MOIS = [("Oct","Octobre"),("Nov","Novembre"),("Dec","Decembre"),("Jan","Janvier"),("Fev","Fevrier"),("Mar","Mars"),("Avr","Avril"),("Mai","Mai"),("Juin","Juin"),("Juil","Juillet")]
 
 class Mensualites(models.Model):
-    eleve = models.ForeignKey(Eleves,on_delete=models.CASCADE)
+    eleve = models.ForeignKey(Eleves, on_delete=models.CASCADE)
     montant = models.FloatField()
     mois = models.CharField(choices=MOIS,max_length=20)
     moyenpai = models.CharField(max_length=20)
