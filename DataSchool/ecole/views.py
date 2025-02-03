@@ -2,13 +2,11 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def home(request):
+def accueil(request):
     return render(request, 'ecole/index.html')
-
-
 
 def contact(request):
     return render(request, 'ecole/contact.html')
 
-def about(request):
+def apropos(request):
     return render(request, 'ecole/about.html')
