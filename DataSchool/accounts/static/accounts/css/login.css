@@ -1,0 +1,49 @@
+#contact.contact {
+  background: linear-gradient(url(/DataSchool/ecole/static/ecole/assets/img/hero-bg.jpg), rgba(255, 255, 255, 0.5));
+  justify-content: space-between;
+}
+
+.tabs .tab {
+  color: rgb(95, 207, 128);
+  background-color: #fff;
+  border-color: rgb(95, 207, 128);
+}
+.tabs .tab:first-child {
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  border-right: none;
+}
+.tabs .tab:last-child {
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  border-left: none;
+}
+.tabs .active {
+  background-color: rgb(95, 207, 128);
+  color: #fff;
+  place-self: center;
+  padding: 5px 15px;
+}
+
+.login {
+  justify-content: center;
+  text-align: center;
+}
+.login .active {
+  display: block;
+}
+.login .hidden {
+  display: none !important;
+}
+.login .active span {
+  color: red;
+}
+.login button[type=submit] {
+  background-color: rgb(95, 207, 128);
+  color: #fff;
+  border-radius: 20px;
+  place-self: center;
+  border: none;
+  padding: 5px 15px;
+  margin-inline: autoS;
+}/*# sourceMappingURL=login.css.map */

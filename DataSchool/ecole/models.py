@@ -56,13 +56,13 @@ class Niveaux(models.Model):
         return self.libelle
 
 class Classes(models.Model):
-    libelle=models.CharField(max_length=10)
+    libelle=models.CharField(max_length=20)
     nbre_place=models.IntegerField(verbose_name="Nombre Place")
     niveaux=models.ForeignKey(Niveaux,on_delete=models.CASCADE)
 
     class Meta:
        verbose_name_plural = "Classes"
-
+  
     def __str__(self):
         return self.libelle
 
@@ -72,7 +72,6 @@ class Tuteurs(models.Model):
     nom=models.CharField(max_length=32)
     prenom=models.CharField(max_length=32)
     tel=models.BigIntegerField(verbose_name="Téléphone")
-    email=models.EmailField()
     adress=models.CharField(max_length=32)
 
 
@@ -98,12 +97,12 @@ GENRE=[
     ]
 
 class Eleves(models.Model):
-    user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     nom=models.CharField(max_length=32)
     matricule = models.CharField(max_length=4, editable=False)
     prenom=models.CharField(max_length=32)
     photo=models.ImageField(upload_to="image") 
-    sexe=models.CharField(choices=GENRE,max_length=10)
+    sexe=models.CharField(max_length=10)
     datenaissance=models.DateField(verbose_name="Date de naissance")
     lieunaissance=models.CharField(max_length=50, verbose_name="Lieu de naissance")
     pere=models.CharField(max_length=50)
@@ -122,7 +121,7 @@ class Eleves(models.Model):
             dernier = Eleves.objects.order_by('-id').first()
             if dernier :
                 dernier_mat = int(dernier.matricule)
-                self.matricule = f"{dernier_mat + 1: 06d}"
+                self.matricule = f"{dernier_mat + 1: 05d}"
             else :
                 self.matricule = '0001'
                 
@@ -170,7 +169,7 @@ class Emplois(models.Model):
     class Meta:
        verbose_name_plural = "Emplois"
 
-    def __str__(self):
+    def __str__(self): 
         return self.classe
  
 class Seances(models.Model):

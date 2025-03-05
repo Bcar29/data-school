@@ -27,6 +27,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# configuration de l'envoi des emails
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'alfadev29@gmail.com'
+EMAIL_HOST_PASSWORD = 'devweb29'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+LOGIN_URL = '/accounts/login/'  # Chemin vers ta page de connexion
 
 # Application definition
 

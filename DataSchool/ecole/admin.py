@@ -29,7 +29,12 @@ class ClassesAdmin(admin.ModelAdmin):
     
 @admin.register(Eleves)
 class ElevesAdmin(admin.ModelAdmin):
-    list_display = ("nom","prenom", "matricule", "sexe", "classe")
+    list_display = ("user","nom","prenom", "matricule", "sexe", "classe")
+
+
+@admin.register(Tuteurs)
+class TuteursAdmin(admin.ModelAdmin):
+    list_display = ("nom","prenom", "adress", "tel")
 
 
 @admin.register(Profs)

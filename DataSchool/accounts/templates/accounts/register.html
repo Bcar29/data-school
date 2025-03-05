@@ -1,0 +1,206 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}" />
+{% include "ecole/header.html" %}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}" />
+
+
+<section id="contact" class="contact section mt-5">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+      <div class="col-lg-6">
+        <section id="hero" class="hero section dark-background">
+
+          <img src="{% static 'ecole/assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
+
+          <div class="container">
+            <h2 data-aos="fade-up" data-aos-delay="100">Learning Today,<br>Leading Tomorrow</h2>
+            <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with Bootstrap
+            </p>
+            <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+              <a href="" class="btn-get-started">Get Started</a>
+            </div>
+          </div>
+
+        </section><!-- /Hero Section -->
+      </div>
+
+      <div class="col-lg-6 container">
+        <div class="form">
+          <div class="tabs row mb-3">
+            <button class="tab students col-4 active" id="student-tab">
+              <span class="bi bi-person"></span>elève
+            </button>
+            <button class="tab students col-4" id="parent-tab">
+              <span class="bi bi-person"></span>parent
+            </button>
+            {% comment %} <button class="tab students col-4" id="teacher-tab">
+              <span class="bi bi-person"></span>ennseigant
+            </button> {% endcomment %}
+          </div>
+          <form action="{% url 'accounts:register' %}
+            " class="login" method="post">
+            {% csrf_token %}
+            <div class="forms-tabs">
+
+              <div class="student-form mx-4 row active">
+                <div class="mb-3 input-group">
+                  <p>créer votre compte élève</p>
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre prenom" name="prenom" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre nom" name="nom" class="form-control col-sm-12" />
+                </div>
+
+                <div class="mb-3 input-group">
+                  <select name="niveau" id="" class="form-control">
+                    <option value="none" selected disabled>
+                      Choisissez le niveau
+                    </option>
+
+                    {% for op in opt %}
+                    <optgroup label="{{ op.libelle }}">
+
+                      {% for niv in op.niveaux_set.all %}
+                      <option value="{{ niv.id }}">{{ niv.libelle }}</option>
+
+                      {% endfor %}
+                    </optgroup>
+
+                    {% endfor %}
+
+                  </select>
+                </div>
+                <div class="mb-3 input-group">
+                  <select name="genre" id="" class="form-control col-sm-8">
+                    <option value="none" selected disabled> Entrer votre Genre</option>
+                    <option value="M">Masculin</option>
+                    <option value="F">Feminin</option>
+                  </select>
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="date" placeholder="Entrer votre Date de Naissance" name="dateNaissance"
+                    class="form-control col-sm-12" id="dateNaissance" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre Lieu de Naissance" name="lieuNaissance"
+                    class="form-control col-sm-12" id="lieueNaissance" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer le prenom votre " name="prenomPere"
+                    class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer le prenom votre Mère " name="prenomMere"
+                    class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer le  nom de famille votre mère" name="nomMere"
+                    class="form-control col-sm-12" />
+                  </label>
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="email" placeholder="Entrer votre email" name="email" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group"><input type="password" name="password" id="std-password"
+                    placeholder="Entrer votre Mot de pass" class="form-control"></div>
+                <div class="mb-3 input-group"><input type="password" name="passwordConfirmation"
+                    id="std-confirmPassword" placeholder="Entrer à nouveau votre Mot de pass" class="form-control">
+                </div>
+              </div>
+              {% comment %} end ./student form {% endcomment %}
+
+              <div class="parent-form mx-4 row hidden">
+                <div class="mb-3 input-group">
+                  <p>créer votre compte parent</p>
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre prenom" name="p_prenom" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre nom" name="p_nom" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre adresse" name="p_adresse"
+                    class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="email" placeholder="Entrer votre email" name="p_email" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="tel" placeholder="Entrer votre telephone" name="p_telephone"
+                    class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group"><input type="password" name="p_password" id="prt-password"
+                    placeholder="Entrer votre Mot de pass" class="form-control"></div>
+                <div class="mb-3 input-group"><input type="password" name="p_passwordConfirmation"
+                    id="prt-confirmPassword" placeholder="Entrer à nouveau votre Mot de pass" class="form-control">
+                </div>
+              </div>{% comment %} fin formulaire parent {% endcomment %}
+              {% comment %} <div class="teacher-form mx-4 row hidden">
+                <div class="mb-3 input-group">
+                  <p>créer votre compte enseigant</p>
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre prenom" name="t_prenom" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre nom" name="t_nom" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="text" placeholder="Entrer votre adresse" name="t_adresse"
+                    class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="email" placeholder="Entrer votre email" name="t_email" class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group">
+                  <input type="tel" placeholder="Entrer votre telephone" name="t_telephone"
+                    class="form-control col-sm-12" />
+
+                </div>
+                <div class="mb-3 input-group"><input type="password" name="t_password" id="tch-password"
+                    placeholder="Entrer votre Mot de pass" class="form-control"></div>
+                <div class="mb-3 input-group"><input type="password" name="t_password" id="tch-confirmPassword"
+                    placeholder="Entrer à nouveau votre Mot de pass" class="form-control"></div>
+              </div> {% endcomment %}{% comment %} fin formulaire parent {% endcomment %}
+            </div>
+            <div class="redirections">
+              <p>Déja inscrit.e ? <a href="{% url 'accounts:login' %}">Se connecter</a></p>
+              <p>Mot de pass oublié ? <a href="">reinitialiser</a></p>
+            </div>
+            <input type="text" name="user_type" id="user_type" value="student" hidden>
+
+            <button type="submit" class="submit">
+              <span class="bi bi-register"></span>
+              S'inscrire
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- End Contact Form -->
+    </div>
+  </div>
+</section>
+<!-- /Contact Section -->
+
+
+<script src="{% static 'accounts/js/form.js' %}"></script>
+
+{% include "ecole/footer.html" %}
