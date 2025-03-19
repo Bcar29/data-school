@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +38,7 @@ EMAIL_HOST_PASSWORD = 'devweb29'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
-LOGIN_URL = '/accounts/login/'  # Chemin vers ta page de connexion
+LOGIN_URL = '/accounts/login'  # Chemin vers ta page de connexion
 
 # Application definition
 
@@ -130,6 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

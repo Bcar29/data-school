@@ -33,12 +33,11 @@
             <button class="tab students col-4" id="parent-tab">
               <span class="bi bi-person"></span>parent
             </button>
-            {% comment %} <button class="tab students col-4" id="teacher-tab">
+            <button class="tab students col-4" id="teacher-tab">
               <span class="bi bi-person"></span>ennseigant
-            </button> {% endcomment %}
+            </button>
           </div>
-          <form action="{% url 'accounts:register' %}
-            " class="login" method="post">
+          <form  class="login" method="post">
             {% csrf_token %}
             <div class="forms-tabs">
 

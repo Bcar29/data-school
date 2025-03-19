@@ -36,3 +36,11 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
     
+    def save(self, *args, **kwargs):
+        if self.pk:  # Vérifie si l'utilisateur existe déjà
+            orig = CustomUser.objects.get(pk=self.pk)
+            if orig.password != self.password:  # Si le mot de passe a changé, on le hash
+                self.set_password(self.password)
+        else:
+            self.set_password(self.password)  # Si c'est un nouvel utilisateur
+        super().save(*args, **kwargs)

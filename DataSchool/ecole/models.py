@@ -53,7 +53,7 @@ class Niveaux(models.Model):
        verbose_name_plural = "Niveaux"
 
     def __str__(self):
-        return self.libelle
+        return f"{self.libelle} {self.option}"
 
 class Classes(models.Model):
     libelle=models.CharField(max_length=20)
@@ -67,19 +67,6 @@ class Classes(models.Model):
         return self.libelle
 
 
-class Tuteurs(models.Model):
-    user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    nom=models.CharField(max_length=32)
-    prenom=models.CharField(max_length=32)
-    tel=models.BigIntegerField(verbose_name="Téléphone")
-    adress=models.CharField(max_length=32)
-
-
-    class Meta:
-       verbose_name_plural = "Tuteurs"
-
-    def __str__(self):
-        return f"Tuteur: {self.nom} {self.prenom}"
 
 class Matieres(models.Model):
     code=models.CharField(max_length=16)
@@ -108,7 +95,7 @@ class Eleves(models.Model):
     pere=models.CharField(max_length=50)
     mere=models.CharField(max_length=50)
     classe=models.ForeignKey(Classes,on_delete=models.SET_NULL,null=True)
-    tuteurs=models.ManyToManyField(Tuteurs)
+    # tuteurs=models.ManyToManyField(Tuteurs)
 
     class Meta:
        verbose_name_plural = "Eleves"
@@ -121,11 +108,28 @@ class Eleves(models.Model):
             dernier = Eleves.objects.order_by('-id').first()
             if dernier :
                 dernier_mat = int(dernier.matricule)
-                self.matricule = f"{dernier_mat + 1: 05d}"
+                self.matricule = f"{dernier_mat + 1:04d}"
             else :
                 self.matricule = '0001'
                 
         super().save(*args, **kwargs)
+
+
+class Tuteurs(models.Model):
+    user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    nom=models.CharField(max_length=32)
+    prenom=models.CharField(max_length=32)
+    tel=models.BigIntegerField(verbose_name="Téléphone")
+    adress=models.CharField(max_length=32)
+    enfant = models.ManyToManyField(Eleves)
+    
+
+
+    class Meta:
+       verbose_name_plural = "Tuteurs"
+
+    def __str__(self):
+        return f"Tuteur: {self.nom} {self.prenom}"
 
 
 class Profs(models.Model):
@@ -133,7 +137,7 @@ class Profs(models.Model):
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
     tel = models.BigIntegerField(verbose_name="Téléphone")
-    email = models.EmailField()
+    # email = models.EmailField()
     addresse = models.CharField(max_length=50)
 
     class Meta:
@@ -147,13 +151,13 @@ class Cours(models.Model):
     niveau = models.ForeignKey(Niveaux,on_delete=models.CASCADE)
     prof = models.ForeignKey(Profs,on_delete=models.CASCADE)
     coef = models.IntegerField()
-    option = models.ForeignKey(Options, on_delete=models.CASCADE)
+    # option = models.ForeignKey(Options, on_delete=models.CASCADE)
 
     class Meta:
        verbose_name_plural = "Cours"
 
     def __str__(self):
-        return f"Matiere: {self.matiere} {self.niveau}"
+        return f"{self.matiere} {self.niveau}"
 
 JOURS = [("Lu","Lundi"),("Ma","Mardi"),("Mr","Mercredi"),("Je","Jeudi"),("Ve","Vendredi"),("Sa","Samedi")]
 
@@ -170,7 +174,7 @@ class Emplois(models.Model):
        verbose_name_plural = "Emplois"
 
     def __str__(self): 
-        return self.classe
+        return self.classe.libelle
  
 class Seances(models.Model):
     heuredebut=models.TimeField(verbose_name="Debut du cours")
@@ -195,7 +199,6 @@ class EleveSeances(models.Model):
     presence = models.BooleanField()
 
 
-
 class Evaluations(models.Model):
     classe = models.ForeignKey(Classes,on_delete=models.CASCADE)
     cours = models.ForeignKey(Cours,on_delete=models.CASCADE)
@@ -209,15 +212,16 @@ class Evaluations(models.Model):
     def __str__(self):
         return f"Evaluation: {self.classe} {self.cours}"
 
+
 class Notes(models.Model):
     eleve = models.ForeignKey(Eleves,on_delete=models.CASCADE)
     prof = models.ForeignKey(Profs,on_delete=models.SET_NULL,null=True)
     cours = models.ForeignKey(Cours,on_delete=models.CASCADE)
     evaluation = models.ForeignKey(Evaluations,on_delete=models.CASCADE)
-    note1 = models.FloatField()
-    note2 = models.FloatField()
-    note3 = models.FloatField()
-    moy = models.FloatField()
+    note = models.FloatField()
+    # note2 = models.FloatField()
+    # note3 = models.FloatField()
+    # moy = models.FloatField()
 
     class Meta:
        verbose_name_plural = "Notes"
@@ -225,12 +229,15 @@ class Notes(models.Model):
     def __str__(self):
         return f"{self.eleve} {self.moy}"
     
-    def save(self, *args, **kwargs):
-        notes = [self.note1, self.note2, self.note3]
-        n = [i for i in notes if i]
-        self.moy = sum(n)/len(n)
+    # def save(self, *args, **kwargs):
+    #     notes = [self.note1, self.note2, self.note3]
+    #     n = [i for i in notes if i]
+    #     self.moy = sum(n)/len(n)
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
+
+
+
 
 MOIS = [("Oct","Octobre"),("Nov","Novembre"),("Dec","Decembre"),("Jan","Janvier"),("Fev","Fevrier"),("Mar","Mars"),("Avr","Avril"),("Mai","Mai"),("Juin","Juin"),("Juil","Juillet")]
 
@@ -272,40 +279,4 @@ class Inscriptions(models.Model):
 
     def __str__(self):
         return f"Inscription: {self.eleve} {self.date} "
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

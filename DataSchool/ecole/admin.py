@@ -39,11 +39,11 @@ class TuteursAdmin(admin.ModelAdmin):
 
 @admin.register(Profs)
 class ProfsAdmin(admin.ModelAdmin):
-    list_display = ("user", "nom","prenom", "tel", "email", "addresse")
+    list_display = ("user", "nom","prenom", "tel", "addresse")
 
 @admin.register(Cours)
 class CoursAdmin(admin.ModelAdmin):
-    list_display = ("matiere", "niveau", "prof", "coef", "option")
+    list_display = ("matiere", "niveau", "prof", "coef")
 
 @admin.register(Emplois)
 class EmploisAdmin(admin.ModelAdmin):
@@ -60,10 +60,13 @@ class EvaluationAdmin(admin.ModelAdmin):
 
 @admin.register(Notes)
 class NotesAdmin(admin.ModelAdmin):
-    list_display = ("eleve", "prof", "cours", "evaluation", "note1", "note2", "note3", "moy")
+    list_display = ("eleve", "prof", "cours", "evaluation", "note")
 
 @admin.register(Mensualites)
 class MensualitesAdmin(admin.ModelAdmin):
     list_display = ("eleve", "montant", "mois", "date")
 
- 
+@admin.register(Matieres)
+class MatieresAdmin(admin.ModelAdmin):
+    list_display = ('code', 'libelle')
+

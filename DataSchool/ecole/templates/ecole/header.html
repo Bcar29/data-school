@@ -30,71 +30,75 @@
 
   <!-- Main CSS File -->
   <link href="{% static 'ecole/assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'ecole/assets/css/all.min.css' %}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body class="index-page" style="background-color: #e7edf9;">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
+        
+        <!-- Logo -->
+        <a href="{% url 'ecole:home' %}" class="logo d-flex align-items-center me-auto fs-1" style="font-family:cursive;">
+            C-J-P
+        </a>
 
-      <a href="{% url 'ecole:home' %}" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-          C-J-P
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="{% url 'ecole:home' %}" class="active">Accueil<br></a></li>
-          <li><a href="{% url 'ecole:about' %}">A propos</a></li>
-          <li><a href="courses.html">Courses</a></li>
-          <li><a href="trainers.html">Trainers</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+        <!-- Navigation -->
+        <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                    class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
+                <li><a href="{% url 'ecole:home' %}" class="active">Accueil</a></li>
+                <li><a href="{% url 'ecole:about' %}">À propos</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="trainers.html">Trainers</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li class="dropdown">
+                    <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul>
+                        <li><a href="#">Dropdown 1</a></li>
+                        <li class="dropdown">
+                            <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li><a href="#">Deep Dropdown 1</a></li>
+                                <li><a href="#">Deep Dropdown 2</a></li>
+                                <li><a href="#">Deep Dropdown 3</a></li>
+                                <li><a href="#">Deep Dropdown 4</a></li>
+                                <li><a href="#">Deep Dropdown 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Dropdown 2</a></li>
+                        <li><a href="#">Dropdown 3</a></li>
+                        <li><a href="#">Dropdown 4</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'ecole:contact' %}">Contact</a></li>
+
+                <!-- Profile Utilisateur -->
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="d-flex align-items-center">
+                        <img src="{% static 'ecole/assets/img/utill.png' %}" alt="Profile" class="rounded-circle img-thumbnail" style="width: 40px; height: 40px; object-fit: cover; margin-right: 8px;">
+                        <span>{{ user.eleves.prenom|upper }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
+                    </a>
+                    <ul>
+                        {% if user.eleves %}
+                        <li><a href="{% url 'ecole:eleve' %}" class=""> <i class="fas fa-chalkboard-teacher">  {{ user.eleves.prenom }}</i></a></li>
+                        {% elif user.profs %}
+                        <li><a href="{% url 'ecole:prof' %}">Espace Professeur</a></li>
+                        {% elif user.tuteurs %}
+                        <li><a href="{% url 'ecole:parent' %}">Espace Parent</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'accounts:logout' %}">Déconnexion</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a class="btn-getstarted" href="{% url 'accounts:register' %}">Get Started</a></li>
+                {% endif %}
             </ul>
-          </li>
-          <li><a href="{% url 'ecole:contact' %}">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-      {% if user.is_authenticated %}
-        {% if user.eleves %}
-          <a href="#" class="btn-getstarted">eleves </a>      
-          {% elif user.profs %}
-            <a href="#" class="btn-getstarted">profs </a>   
-          {% elif user.parents %}
-            <a href="#" class="btn-getstarted">parents </a>
-          {% else %}
-          <a class="btn-getstarted" href="{% url 'accounts:logout' %}">Deconnexion</a>
-        {% endif %}
-      {% else %}
-        <a class="btn-getstarted" href="{% url 'accounts:register' %}">Get Started</a>
-      {% endif %}
-
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav><!-- End Navigation -->
+        
     </div>
-  </header>
+</header>

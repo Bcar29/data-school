@@ -35,9 +35,10 @@ def Inscription(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
             password_confirmation = request.POST.get('passwordConfirmation')
-
+        
             niv = get_object_or_404(Niveaux, pk=int(niveau))
             cla = niv.classes_set.last() 
+
             if len(cla.eleves_set.all()) == cla.nbre_place:
                cla = Classes.objects.create(libelle = niv.libelle + " " + CLASSE[len(niv.classes_set.all())], nbre_place = cla.nbre_place, niveaux=niv)
 
@@ -58,7 +59,6 @@ def Inscription(request):
 
 
         elif user_type == 'parent':
-            print(user_type)
             prenom = request.POST.get('p_prenom')
             nom = request.POST.get('p_nom')
             adresses = request.POST.get('p_adresse')
@@ -108,7 +108,8 @@ def changePassword(request):
                 update_session_auth_hash(request, request.user)
                 return redirect('ecole:home')
 
-    return render(request, 'accounts/changePassword.html')
+        
+    # return render(request, 'accounts/changePassword.html')
 
 
 # -------------------------------------------------demande de reinitialisation de password-------------------------#
@@ -126,9 +127,11 @@ class password_reset(PasswordResetView):
 
 # ------------------------------------------------reinitialisation de password---------------------------------------#
 class password_reset_confirm(PasswordResetConfirmView):
-    template_name = 'accounts/password_reset_confirm_form.html'
-    password_reset_form = ResetConfirmForm
+    template_name = 'accounts/password_reset_confirm.html'
+    form_class = ResetConfirmForm
     success_url = reverse_lazy("ecole:home")
+    
+
 
     def form_valid(self, form):
         messages.success(self.request, "Votre mot de passe a été modifié avec succès.")
