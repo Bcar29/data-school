@@ -20,7 +20,12 @@ def Inscription(request):
     options = Options.objects.all()
 
     if request.method == 'POST':
+        # Debug information
+        print("Form submitted with POST data:", request.POST)
+        
         user_type = request.POST.get('user_type')
+        print("User type:", user_type)
+        
         if user_type == 'student':
             print(user_type)
             prenom = request.POST.get('prenom')
@@ -135,4 +140,3 @@ class password_reset_confirm(PasswordResetConfirmView):
 
     def form_valid(self, form):
         messages.success(self.request, "Votre mot de passe a été modifié avec succès.")
-        return super().form_valid(form)

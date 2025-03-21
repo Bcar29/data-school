@@ -6,11 +6,8 @@
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-4">
       <div class="col-lg-6">
-        <section id="hero" class="hero section dark-background h-100">
-          <div class="image-container" style="height: 100%;">
-            <img src="{% static 'ecole/assets/img/portrait-young-boy-school-student.jpg' %}" alt="" 
-                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" data-aos="fade-in">
-          </div>
+        <section id="hero" class="hero section dark-background">
+          <img src="{% static 'ecole/assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
         </section><!-- /Hero Section -->
       </div>
 

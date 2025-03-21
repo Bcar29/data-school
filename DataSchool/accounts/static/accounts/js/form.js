@@ -10,57 +10,89 @@ const parentForm = document.querySelector(".parent-form");
 const teacherForm = document.querySelector(".teacher-form");
 const forms = document.querySelectorAll("[class *='-form']");
 let userType = document.querySelector("#user_type");
-const submitButton = document.querySelector(".submit");
+const submitButton = document.querySelector(".submit")
 
-// Initialisation
-console.log("Valeur initiale :", userType.value);
-userType.value = ""; // Réinitialisation
-console.log("Après reset :", userType.value);
-
-// Fonction pour changer l'onglet actif
-function resetActiveTab(tab) {
-  tabs.forEach(t => t.classList.remove("active")); // Désactive tous les onglets
-  tab.classList.add("active"); // Active celui qui est cliqué
-}
-
-// Fonction pour changer le formulaire actif
-function resetActiveForm(form) {
-  forms.forEach(f => {
-    f.classList.remove("active");
-    f.classList.add("hidden");
-  });
-
-  form.classList.remove("hidden");
-  form.classList.add("active");
-}
-
-// Gestion du changement de formulaire
+// changer de formulaire selon le button cliqué
+console.log(userType.value)
+userType.value = ''
+console.log(userType.value)
 tabs.forEach((tab) => {
   tab.addEventListener("click", (e) => {
     resetActiveTab(tab);
 
-    if (tab === studentTab) {
+    if (e.target == studentTab) {
       resetActiveForm(studentForm);
-      userType.value = "student";
-    } else if (tab === parentTab) {
-      resetActiveForm(parentForm);
-      userType.value = "parent";
-    } else if (tab === teacherTab) {
-      resetActiveForm(teacherForm);
-      userType.value = "teacher";
-    }
+      userType.setAttribute("value" , "student");
+      console.log(userType.value);
 
-    console.log("Utilisateur sélectionné :", userType.value);
+    }
+    if (e.target == parentTab) {
+      resetActiveForm(parentForm);
+      userType.setAttribute("value" , "parent");
+      console.log(userType.value);
+
+    }
+    if (e.target == teacherTab) {
+      resetActiveForm(teacherForm);
+      userType.setAttribute("value" , "teacher");
+      console.log(userType.value);
+
+    }
   });
 });
 
-// Empêcher l'envoi du formulaire pour test
-form.addEventListener('submit', (e) => {
-  e.preventDefault(); // Empêche l'envoi du formulaire
-  console.log("Formulaire soumis avec userType:", userType.value);
-});
+// condition ? actions (si c'est vrai) : actions (si c'est pas vrai)
+/* équivaut à
+ si (conditions) {
+  actions
+ }
+  
+ */
+// condition && actions (si c'est vrai)
 
-// Vérification au clic sur le bouton de soumission
+// la fonction pour changer de changer le button actif
+
+function resetActiveTab(tab) {
+  tab.nextElementSibling
+    ? tab.nextElementSibling.classList.remove("active")
+    : tab.parentElement.firstElementChild.classList.remove("active");
+  tab.previousElementSibling
+    ? tab.previousElementSibling.classList.remove("active")
+    : tab.parentElement.lastElementChild.classList.remove("active");
+  if (!tab.classList.contains("active")) {
+    tab.classList.add("active");
+  }
+}
+
+// fonction pour changer le formulaire actif
+function resetActiveForm(form) {
+  if (form.nextElementSibling) {
+    form.nextElementSibling.classList.remove("active");
+    form.nextElementSibling.classList.add("hidden");
+  } else {
+    form.parentElement.firstElementChild.classList.remove("active");
+    form.parentElement.firstElementChild.classList.add("hidden");
+  }
+  if (form.previousElementSibling) {
+    form.previousElementSibling.classList.remove("active");
+    form.previousElementSibling.classList.add("hidden");
+  } else {
+    form.parentElement.lastElementChild.classList.remove("active");
+    form.parentElement.lastElementChild.classList.add("hidden");
+  }
+  if (!form.classList.contains("active")) {
+    form.classList.remove("hidden");
+    form.classList.add("active");
+  }
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault
+  console.log(userType.value)
+})
+
+
 submitButton.addEventListener('click', (e) => {
-  console.log("Bouton soumis avec userType:", userType.value);
-});
+  console.log(userType.value)
+})
+
