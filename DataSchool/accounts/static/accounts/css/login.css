@@ -6,22 +6,13 @@
 
 .tabs {
   display: flex;
+  justify-self: center;
   width: 100%;
-  align-items: center;
-  padding: 15px;
-  justify-self: stretch;
 }
 .tabs .tab {
   color: rgb(95, 207, 128);
   background-color: #fff;
   border-color: rgb(95, 207, 128);
-  transition: all 0.3s ease;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-.tabs .tab:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .tabs .tab:first-child {
   border-top-left-radius: 20px !important;
@@ -38,7 +29,6 @@
   color: #fff;
   place-self: center;
   padding: 5px 15px;
-  box-shadow: 0 4px 8px rgba(95, 207, 128, 0.3);
 }
 
 .login {
@@ -60,22 +50,11 @@
   border-radius: 20px;
   place-self: center;
   border: none;
-  padding: 8px 20px;
+  padding: 5px 15px;
   margin-inline: auto;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(95, 207, 128, 0.3);
-}
-.login button[type=submit]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(95, 207, 128, 0.4);
-}
-.login button[type=submit]:active {
-  transform: translateY(1px);
 }
 
-/* Image and form styling for both login and register */
+/* Add to your accounts/css/login.css file */
 .hero.section {
   display: flex;
   align-items: center;
@@ -90,76 +69,6 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* Form styling enhancements */
-.form {
-  height: 100%;
-  background-color: #fff;
-  transition: all 0.3s ease;
-  border-radius: 12px;
-}
-
-.form h3 {
-  color: rgb(95, 207, 128);
-  font-weight: 600;
-  position: relative;
-  padding-bottom: 10px;
-}
-
-.form h3:after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 3px;
-  background: rgb(95, 207, 128);
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.form .input-group {
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.form input, .form select {
-  border-radius: 20px;
-  padding: 12px 18px;
-  border: 1px solid #ddd;
-  transition: all 0.3s ease;
-  width: 100%;
-  font-size: 0.95rem;
-}
-
-.form input:focus, .form select:focus {
-  border-color: rgb(95, 207, 128);
-  box-shadow: 0 0 0 0.2rem rgba(95, 207, 128, 0.25);
-  outline: none;
-}
-
-.redirections {
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
-}
-
-.redirections a {
-  color: rgb(95, 207, 128);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.redirections a:hover {
-  text-decoration: underline;
-  color: rgb(75, 187, 108);
-}
-
-@media (max-width: 992px) {
-  .hero.section {
-    min-height: 300px;
-    margin-bottom: 2rem;
-  }
-}/*# sourceMappingURL=login.css.map */
 
 /* Form validation styling */
 .form input:invalid:focus,
@@ -223,27 +132,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-/* Success message styling */
-.success-message {
-  color: rgb(95, 207, 128);
-  background-color: rgba(95, 207, 128, 0.1);
-  border: 1px solid rgba(95, 207, 128, 0.2);
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-  display: none;
-}
-
-.success-message.show {
-  display: block;
-  animation: fadeIn 0.3s ease;
-}
-
 @media (max-width: 992px) {
   .hero.section {
     min-height: 300px;
